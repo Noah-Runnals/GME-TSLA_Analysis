@@ -8,6 +8,7 @@ import warnings
 
 
 warnings.filterwarnings("ignore", category=FutureWarning)
+
 def analyze_stock(ticker,url_in):
     ticker_data = yf.download(ticker, period='max')
 
@@ -24,6 +25,7 @@ def analyze_stock(ticker,url_in):
             input = {"Date": date, "Revenue": revenue.replace("$","").replace(",","")}
             Ticker_revenue.loc[len(Ticker_revenue.index)] = input
     Ticker_revenue = Ticker_revenue.drop(51).set_index('Date')
+    make_graph(ticker_data, Ticker_revenue,ticker)
 
 
     def make_graph(stock_data, revenue_data, stock):
@@ -44,9 +46,6 @@ def analyze_stock(ticker,url_in):
                           title=stock,
                           xaxis_rangeslider_visible=True)
         fig.show()
-
-
-    make_graph(ticker_data, Ticker_revenue,ticker)
 
 
 tsla_url ='https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-PY0220EN-SkillsNetwork/labs/project/revenue.htm'
